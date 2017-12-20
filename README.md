@@ -1,0 +1,2 @@
+# connectme
+ini adalah portal yang menghubungkan mahasiswa pens langsung kepada alumni nya untuk kebutuhan intership, fulltime job, dan sharing update teknologi terkini. Namun, tidak menutup kemungkinan juga untuk perusahaan yang langsung membuka kesempatan kepada mahasiswa. Diharapkan dengan kehadiran portal ini, hubungan antara pens dengan alumni nya bisa semakin erat dan mahasiswa pens memiliki kematangan wawasan sebelum terjun kedunia kerja berkat sharing artikel dari alumni.
