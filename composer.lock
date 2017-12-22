@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe72bab82c26072dc006c828076816b7",
+    "content-hash": "7d4627fb017ab16aa315cfa83c10bb0a",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -18,6 +18,52 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/twbs/bootstrap/zipball/0b9c4a4007c44201dce9a6cc1a38407005c26c86",
                 "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86",
+                "shasum": null
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.9.1,<4.0"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/bootstrap-material-design",
+            "version": "v0.5.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FezVrasta/bootstrap-material-design.git",
+                "reference": "6625d42cc2f591ea7bc05ea0f95a2d091c3a1865"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FezVrasta/bootstrap-material-design/zipball/6625d42cc2f591ea7bc05ea0f95a2d091c3a1865",
+                "reference": "6625d42cc2f591ea7bc05ea0f95a2d091c3a1865",
+                "shasum": null
+            },
+            "require": {
+                "bower-asset/bootstrap": "~3.3.6",
+                "bower-asset/bootstrap-sass": "~3.3.6",
+                "bower-asset/jquery": ">=2.2.0,<3.0.0"
+            },
+            "type": "bower-asset",
+            "license": [
+                "https://github.com/FezVrasta/bootstrap-material-design/blob/master/LICENSE.md"
+            ]
+        },
+        {
+            "name": "bower-asset/bootstrap-sass",
+            "version": "v3.3.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twbs/bootstrap-sass.git",
+                "reference": "5d6b2ebba0c2a5885ce2f0e01e9218db3d3b5e47"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twbs/bootstrap-sass/zipball/5d6b2ebba0c2a5885ce2f0e01e9218db3d3b5e47",
+                "reference": "5d6b2ebba0c2a5885ce2f0e01e9218db3d3b5e47",
                 "shasum": null
             },
             "require": {
@@ -52,16 +98,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "3.2.1",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jquery/jquery-dist.git",
-                "reference": "77d2a51d0520d2ee44173afdf4e40a9201f5964e"
+                "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/77d2a51d0520d2ee44173afdf4e40a9201f5964e",
-                "reference": "77d2a51d0520d2ee44173afdf4e40a9201f5964e",
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/c0185ab7c75aab88762c5aae780b9d83b80eda72",
+                "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72",
                 "shasum": null
             },
             "type": "bower-asset",
@@ -168,6 +214,57 @@
             "time": "2017-07-16T21:13:23+00:00"
         },
         {
+            "name": "exocet/yii2-bootstrap-material-design",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xchwarze/yii2-bootstrap-material-design.git",
+                "reference": "d32758a4149436492a26286bf069e8031871ec0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xchwarze/yii2-bootstrap-material-design/zipball/d32758a4149436492a26286bf069e8031871ec0b",
+                "reference": "d32758a4149436492a26286bf069e8031871ec0b",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bootstrap-material-design": "^0.5",
+                "mervick/material-design-icons": "^2.2",
+                "yiisoft/yii2": "~2.0.5",
+                "yiisoft/yii2-bootstrap": "~2.0.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "exocet\\BootstrapMD\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "DSR!",
+                    "email": "xchwarze@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Oleg Ilyushyn",
+                    "email": "iloa.exec@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Composer package for implementing FezVrasta's bootstrap material design in Yii2.",
+            "keywords": [
+                "bootstrap",
+                "material",
+                "yii",
+                "yii2"
+            ],
+            "time": "2017-01-26T22:43:14+00:00"
+        },
+        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.9.3",
             "source": {
@@ -213,6 +310,45 @@
                 "html"
             ],
             "time": "2017-06-03T02:28:16+00:00"
+        },
+        {
+            "name": "mervick/material-design-icons",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mervick/material-design-icons.git",
+                "reference": "635435c8d3df3a6da3241648caf8a65d1c07cc1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mervick/material-design-icons/zipball/635435c8d3df3a6da3241648caf8a65d1c07cc1a",
+                "reference": "635435c8d3df3a6da3241648caf8a65d1c07cc1a",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "CC-BY-4.0"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Izman",
+                    "email": "izmanw@gmail.com"
+                }
+            ],
+            "description": "Google Material Design Icons For Using With Bootstrap",
+            "homepage": "http://github.com/mervick/material-design-icons",
+            "keywords": [
+                "bootstrap",
+                "google",
+                "icons",
+                "icons-web-font",
+                "material",
+                "material-design",
+                "web-font"
+            ],
+            "time": "2016-02-22T01:05:40+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -267,6 +403,107 @@
                 "mailer"
             ],
             "time": "2017-05-01T15:54:03+00:00"
+        },
+        {
+            "name": "yii2mod/yii2-enum",
+            "version": "1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2mod/yii2-enum.git",
+                "reference": "7af030e19636ece5fd0adb5d6012d2b03fa63895"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2mod/yii2-enum/zipball/7af030e19636ece5fd0adb5d6012d2b03fa63895",
+                "reference": "7af030e19636ece5fd0adb5d6012d2b03fa63895",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii2mod\\enum\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Semenov",
+                    "email": "disemx@gmail.com"
+                },
+                {
+                    "name": "Igor Chepurnoi",
+                    "email": "igorzfort@gmail.com"
+                }
+            ],
+            "description": "Yii2 Enumerable helpers",
+            "keywords": [
+                "enumerable helper",
+                "yii2",
+                "yii2 enum"
+            ],
+            "time": "2017-04-19T22:06:46+00:00"
+        },
+        {
+            "name": "yii2mod/yii2-user",
+            "version": "2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2mod/yii2-user.git",
+                "reference": "357fb3f1ce1ba1c4c09c81cbec7a5390ae0f7b2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2mod/yii2-user/zipball/357fb3f1ce1ba1c4c09c81cbec7a5390ae0f7b2c",
+                "reference": "357fb3f1ce1ba1c4c09c81cbec7a5390ae0f7b2c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "yii2mod/yii2-enum": "*",
+                "yiisoft/yii2": ">=2.0.8",
+                "yiisoft/yii2-swiftmailer": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii2mod\\user\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Semenov",
+                    "email": "disemx@gmail.com"
+                },
+                {
+                    "name": "Igor Chepurnoy",
+                    "email": "igorzfort@gmail.com"
+                }
+            ],
+            "description": "User module",
+            "keywords": [
+                "User management",
+                "user module",
+                "yii2",
+                "yii2-user"
+            ],
+            "time": "2017-06-08T14:56:54+00:00"
         },
         {
             "name": "yiisoft/yii2",
