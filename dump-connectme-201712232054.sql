@@ -74,13 +74,13 @@ LOCK TABLES `article_category` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `awards`
+-- Table structure for table `award`
 --
 
-DROP TABLE IF EXISTS `awards`;
+DROP TABLE IF EXISTS `award`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `awards` (
+CREATE TABLE `award` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `seeker_profile_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -90,18 +90,18 @@ CREATE TABLE `awards` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `awards_seeker_profile_FK` (`seeker_profile_id`),
-  CONSTRAINT `awards_seeker_profile_FK` FOREIGN KEY (`seeker_profile_id`) REFERENCES `seeker_profile` (`id`)
+  KEY `award_seeker_profile_FK` (`seeker_profile_id`),
+  CONSTRAINT `award_seeker_profile_FK` FOREIGN KEY (`seeker_profile_id`) REFERENCES `seeker_profile` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `awards`
+-- Dumping data for table `award`
 --
 
-LOCK TABLES `awards` WRITE;
-/*!40000 ALTER TABLE `awards` DISABLE KEYS */;
-/*!40000 ALTER TABLE `awards` ENABLE KEYS */;
+LOCK TABLES `award` WRITE;
+/*!40000 ALTER TABLE `award` DISABLE KEYS */;
+/*!40000 ALTER TABLE `award` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
