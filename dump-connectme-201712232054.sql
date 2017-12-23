@@ -87,6 +87,8 @@ CREATE TABLE `awards` (
   `held_date` date NOT NULL,
   `news_url` varchar(255) DEFAULT NULL,
   `description` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `awards_seeker_profile_FK` (`seeker_profile_id`),
   CONSTRAINT `awards_seeker_profile_FK` FOREIGN KEY (`seeker_profile_id`) REFERENCES `seeker_profile` (`id`)
@@ -117,6 +119,8 @@ CREATE TABLE `company` (
   `establishment_date` date NOT NULL,
   `company_website_url` varchar(500) DEFAULT NULL,
   `company_image` varchar(500) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `company_user_FK` (`user_id`),
   CONSTRAINT `company_user_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
@@ -151,6 +155,8 @@ CREATE TABLE `jobs` (
   `show_salary` tinyint(4) DEFAULT '0',
   `start_salary` decimal(10,2) NOT NULL,
   `end_salary` decimal(10,2) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `jobs_company_FK` (`company_id`),
   CONSTRAINT `jobs_company_FK` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
@@ -210,6 +216,8 @@ CREATE TABLE `seeker_profile` (
   `is_active` tinyint(4) DEFAULT '0',
   `contact_number` varchar(20) DEFAULT NULL,
   `registration_date` date NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `seeker_profile_user_FK` (`user_id`),
   CONSTRAINT `seeker_profile_user_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
@@ -236,6 +244,8 @@ CREATE TABLE `seeker_skill_set` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `seeker_profile_id` int(11) NOT NULL,
   `skill_set_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `seeker_skill_set_seeker_profile_FK` (`seeker_profile_id`),
   KEY `seeker_skill_set_skill_set_FK` (`skill_set_id`),
@@ -263,6 +273,8 @@ DROP TABLE IF EXISTS `skill_set`;
 CREATE TABLE `skill_set` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `skill_set_name` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -324,4 +336,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-23 20:27:45
+-- Dump completed on 2017-12-23 20:54:44
