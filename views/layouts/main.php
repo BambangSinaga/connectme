@@ -36,22 +36,36 @@ AppAsset::register($this);
         ],
     ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
+        'options' => ['class' => 'navbar-nav '],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Articles', 'url' => ['/article/index']],
+            ['label' => 'Jobs', 'url' => ['/job/index']]
+        ],
+    ]);
+    echo Nav::widget([
+        'encodeLabels' => false,
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'items' => [
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
+                [
+                    'label' => Yii::$app->user->identity->username,
+                    'items' => [
+                        ['label' => '<i class="glyphicon glyphicon-user"></i> Profile', 'url' => '/seeker-profile/view'],
+                        ['label' => '<i class="glyphicon glyphicon-edit"></i> Edit Profile', 'url' => '/seeker-profile/update'],
+                        '<li>'
+                        .  Html::a(
+                            '<i class="glyphicon glyphicon-log-out"></i> Sign out',
+                            ['/site/logout'],
+                            ['data-method' => 'post','class'=>'']
+                        ) 
+                        . '</li>',
+                        ['label' => '<i class="glyphicon glyphicon-list-alt"></i> My Articles', 'url' => '/site/request-password-reset'],
+                        ['label' => '<i class="glyphicon glyphicon-cog"></i> Reset Password', 'url' => '/site/request-password-reset'],
+                    ]
+                ]
             )
         ],
     ]);
