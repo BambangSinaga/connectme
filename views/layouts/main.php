@@ -55,6 +55,8 @@ AppAsset::register($this);
                     'items' => [
                         ['label' => '<i class="glyphicon glyphicon-user"></i> Profile', 'url' => '/seeker-profile/view'],
                         ['label' => '<i class="glyphicon glyphicon-edit"></i> Edit Profile', 'url' => '/seeker-profile/update'],
+                        ['label' => '<i class="glyphicon glyphicon-list-alt"></i> My Articles', 'url' => '/article/my-article'],
+                        ['label' => '<i class="glyphicon glyphicon-cog"></i> Reset Password', 'url' => '/site/request-password-reset'],
                         '<li>'
                         .  Html::a(
                             '<i class="glyphicon glyphicon-log-out"></i> Sign out',
@@ -62,8 +64,6 @@ AppAsset::register($this);
                             ['data-method' => 'post','class'=>'']
                         ) 
                         . '</li>',
-                        ['label' => '<i class="glyphicon glyphicon-list-alt"></i> My Articles', 'url' => '/site/request-password-reset'],
-                        ['label' => '<i class="glyphicon glyphicon-cog"></i> Reset Password', 'url' => '/site/request-password-reset'],
                     ]
                 ]
             )

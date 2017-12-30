@@ -4059,52 +4059,6 @@
         ]
     },
     {
-        "name": "yiidoc/yii2-redactor",
-        "version": "2.0.1",
-        "version_normalized": "2.0.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/yiidoc/yii2-redactor.git",
-            "reference": "c4c80c19c68728e88d135f4eec5c51352fbbaa37"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/yiidoc/yii2-redactor/zipball/c4c80c19c68728e88d135f4eec5c51352fbbaa37",
-            "reference": "c4c80c19c68728e88d135f4eec5c51352fbbaa37",
-            "shasum": ""
-        },
-        "require": {
-            "yiisoft/yii2": "*"
-        },
-        "time": "2015-06-02T21:47:24+00:00",
-        "type": "yii2-extension",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "yii\\redactor\\": "/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Nghia Nguyen",
-                "email": "zinzinday@gmail.com"
-            }
-        ],
-        "description": "Extension redactor for Yii2 Framework.",
-        "keywords": [
-            "Redactor",
-            "extension",
-            "html editor",
-            "imperavi",
-            "wysiwyg",
-            "yii2"
-        ]
-    },
-    {
         "name": "kartik-v/yii2-widget-typeahead",
         "version": "v1.0.1",
         "version_normalized": "1.0.1.0",
@@ -5040,6 +4994,63 @@
         "description": "Simple RBAC Manager",
         "keywords": [
             "extension",
+            "yii2"
+        ]
+    },
+    {
+        "name": "vova07/yii2-imperavi-widget",
+        "version": "2.0.1",
+        "version_normalized": "2.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vova07/yii2-imperavi-widget.git",
+            "reference": "5d5ecb2badf2c2d55fd791d73d801c67d5fd188d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vova07/yii2-imperavi-widget/zipball/5d5ecb2badf2c2d55fd791d73d801c67d5fd188d",
+            "reference": "5d5ecb2badf2c2d55fd791d73d801c67d5fd188d",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2": "*"
+        },
+        "require-dev": {
+            "mikey179/vfsstream": "~1",
+            "phpunit/phpunit": "4.*",
+            "scrutinizer/ocular": "~1.1"
+        },
+        "time": "2017-12-09T20:29:38+00:00",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "vova07\\imperavi\\": "src",
+                "vova07\\imperavi\\tests\\": "tests"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Crudu Vasile",
+                "email": "bazillio07@yandex.ru",
+                "homepage": "https://github.com/vova07",
+                "role": "Developer"
+            }
+        ],
+        "description": "The imperavi redactor widget for Yii 2 framework.",
+        "homepage": "https://github.com/vova07/yii2-imperavi-widget",
+        "keywords": [
+            "Redactor",
+            "extension",
+            "imperavi",
+            "widget",
+            "wysiwyg",
+            "yii",
+            "yii 2",
             "yii2"
         ]
     }

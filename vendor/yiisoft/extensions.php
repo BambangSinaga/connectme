@@ -165,15 +165,6 @@ return array (
       '@cornernote/linkall' => $vendorDir . '/cornernote/yii2-linkall/src',
     ),
   ),
-  'yiidoc/yii2-redactor' => 
-  array (
-    'name' => 'yiidoc/yii2-redactor',
-    'version' => '2.0.1.0',
-    'alias' => 
-    array (
-      '@yii/redactor' => '/',
-    ),
-  ),
   'kartik-v/yii2-widget-typeahead' => 
   array (
     'name' => 'kartik-v/yii2-widget-typeahead',
@@ -316,6 +307,16 @@ return array (
     'alias' => 
     array (
       '@hscstudio/mimin' => $vendorDir . '/hscstudio/yii2-mimin',
+    ),
+  ),
+  'vova07/yii2-imperavi-widget' => 
+  array (
+    'name' => 'vova07/yii2-imperavi-widget',
+    'version' => '2.0.1.0',
+    'alias' => 
+    array (
+      '@vova07/imperavi' => $vendorDir . '/vova07/yii2-imperavi-widget/src',
+      '@vova07/imperavi/tests' => $vendorDir . '/vova07/yii2-imperavi-widget/tests',
     ),
   ),
 );

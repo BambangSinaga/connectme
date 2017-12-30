@@ -19,7 +19,6 @@ class ComposerStaticInit14cad7b86f8edde47eac841e6ee809c4
         'y' => 
         array (
             'yii\\swiftmailer\\' => 16,
-            'yii\\redactor\\' => 13,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
             'yii\\debug\\' => 10,
@@ -32,6 +31,11 @@ class ComposerStaticInit14cad7b86f8edde47eac841e6ee809c4
         'w' => 
         array (
             'wbraganca\\dynamicform\\' => 22,
+        ),
+        'v' => 
+        array (
+            'vova07\\imperavi\\tests\\' => 22,
+            'vova07\\imperavi\\' => 16,
         ),
         'p' => 
         array (
@@ -125,10 +129,6 @@ class ComposerStaticInit14cad7b86f8edde47eac841e6ee809c4
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-swiftmailer',
         ),
-        'yii\\redactor\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/yiidoc/yii2-redactor',
-        ),
         'yii\\gii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-gii',
@@ -164,6 +164,14 @@ class ComposerStaticInit14cad7b86f8edde47eac841e6ee809c4
         'wbraganca\\dynamicform\\' => 
         array (
             0 => __DIR__ . '/..' . '/wbraganca/yii2-dynamicform/src',
+        ),
+        'vova07\\imperavi\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vova07/yii2-imperavi-widget/tests',
+        ),
+        'vova07\\imperavi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vova07/yii2-imperavi-widget/src',
         ),
         'phpDocumentor\\Reflection\\' => 
         array (

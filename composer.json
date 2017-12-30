@@ -28,8 +28,8 @@
         "wbraganca/yii2-dynamicform": "dev-master",
         "mootensai/yii2-relation-trait": "*",
         "cornernote/yii2-linkall": "*",
-        "yiidoc/yii2-redactor": "*",
-        "hscstudio/yii2-mimin": "~1.1.4"
+        "hscstudio/yii2-mimin": "~1.1.4",
+        "vova07/yii2-imperavi-widget": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
