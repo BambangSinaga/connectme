@@ -40,7 +40,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Articles', 'url' => ['/article/index']],
-            ['label' => 'Jobs', 'url' => ['/job/index']]
+            ['label' => 'Jobs', 'url' => ['/jobs/index']]
         ],
     ]);
     echo Nav::widget([
@@ -62,7 +62,7 @@ AppAsset::register($this);
                             '<i class="glyphicon glyphicon-log-out"></i> Sign out',
                             ['/site/logout'],
                             ['data-method' => 'post','class'=>'']
-                        ) 
+                        )
                         . '</li>',
                     ]
                 ]

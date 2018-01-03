@@ -1,5 +1,8 @@
 <?php
 
+Yii::setAlias('@companyPath','/opt/lampp/htdocs/connectme/uploads/company/');
+Yii::setAlias('@companyUrl','http://connectme/uploads/company');
+
 return [
     'adminEmail' => 'admin@example.com',
     'user.passwordResetTokenExpire' => 3600,
