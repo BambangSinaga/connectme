@@ -7,6 +7,7 @@ use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "article".
@@ -15,6 +16,7 @@ use yii\behaviors\SluggableBehavior;
  * @property int $user_id
  * @property string $title
  * @property string $slug
+ * @property string $preview_image
  * @property string $content
  * @property int $article_category_id
  * @property int $status
@@ -68,10 +70,11 @@ class Article extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'article_category_id', 'status'], 'required'],
+            [['title', 'content', 'preview_image', 'article_category_id', 'status'], 'required'],
             [['user_id', 'article_category_id', 'status'], 'integer'],
             [['content'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
+            [['preview_image'], 'file', 'extensions' => ['png', 'jpg', 'gif'], 'maxSize' => '100000'], //
             [['title', 'slug'], 'string', 'max' => 255],
             [['article_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ArticleCategory::className(), 'targetAttribute' => ['article_category_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -89,6 +92,7 @@ class Article extends \yii\db\ActiveRecord
             'title' => 'Title',
             'slug' => 'Slug',
             'content' => 'Content',
+            'preview_image' => 'Preview Image',
             'article_category_id' => 'Article Category ID',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -112,13 +116,52 @@ class Article extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public function getRoute()
+    public function getImageFile() 
     {
-        return ['article/view', 'id'=>$this->id, 'slug'=>$this->slug];
+        return isset($this->preview_image) ? Yii::$app->params['upload']['myphoto']['path'] . Yii::$app->user->id . '/' . $this->preview_image : null;
     }
 
-    public function getUrl()
+    public function getImageUrl() 
     {
-        return \yii\helpers\Url::to($this->getRoute());
+        // return a default image placeholder if your source avatar is not found
+        $avatar = isset($this->preview_image) ? $this->preview_image : 'default_user.png';
+        return Yii::$app->urlManager->createUrl(Yii::$app->params['upload']['myphoto']['url']). Yii::$app->user->id . '/' . $avatar;
+    }
+
+    public function uploadImage() {
+        $image = UploadedFile::getInstance($this, 'preview_image');
+
+        // if no image was uploaded abort the upload
+        if (empty($image)) {
+            return false;
+        }
+
+        $ext = explode(".", $image->name);
+        $ext = end($ext);
+
+        // generate a unique file name
+        $this->preview_image = Yii::$app->security->generateRandomString().".{$ext}";
+
+        // the uploaded image instance
+        return $image;
+    }
+
+    public function deleteImage() {
+        $file = $this->getImageFile();
+
+        // check if file exists on server
+        if (empty($file) || !file_exists($file)) {
+            return false;
+        }
+
+        // check if uploaded file can be deleted on server
+        if (!unlink($file)) {
+            return false;
+        }
+
+        // if deletion successful, reset your file attributes
+        $this->preview_image = null;
+
+        return true;
     }
 }

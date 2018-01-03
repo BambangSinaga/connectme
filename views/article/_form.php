@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use app\models\ArticleCategory;
 use vova07\imperavi\Widget;
 use yii\helpers\Url;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Article */
@@ -17,9 +18,20 @@ $dataCategory = ArrayHelper::map(ArticleCategory::find()->asArray()->all(), 'id'
 
 <div class="article-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => ['enctype' => 'multipart/form-data']
+    ]); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'write title here']) ?>
+
+    <?= $form->field($model, 'preview_image')->widget(FileInput::classname(), [
+                'options'=>[
+                    'accept'=>'image/*'
+                ],
+                'pluginOptions'=>[
+                    'allowedFileExtensions'=>['jpg','gif','png'],
+                    'showUpload' => false,
+            ]]); ?>
 
     <?= $form->field($model, 'content')->widget(Widget::className(), [
         // 'selector' => 'article-content',
@@ -38,7 +50,7 @@ $dataCategory = ArrayHelper::map(ArticleCategory::find()->asArray()->all(), 'id'
         ],
     ])?>
 
-    <?= $form->field($model, 'article_category_id')->dropDownList($dataCategory, ['prompt' => '-Choose a Category-']) ?>
+    <?= $form->field($model, 'article_category_id')->dropDownList($dataCategory, ['prompt' => '-Choose a Category-'])->label('Article Category <a href="'.Url::to(['/article-category/create']).'"><span>add new category?</span></a>') ?>
 
     <?= $form->field($model, 'status')->dropDownList([
         '0' => 'Draft',

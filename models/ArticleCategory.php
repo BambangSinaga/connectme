@@ -19,6 +19,8 @@ use yii\behaviors\BlameableBehavior;
  */
 class ArticleCategory extends \yii\db\ActiveRecord
 {
+
+    public $article_count;
     /**
      * @inheritdoc
      */
@@ -50,7 +52,7 @@ class ArticleCategory extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'article_count'], 'safe'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -75,4 +77,5 @@ class ArticleCategory extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Article::className(), ['article_category_id' => 'id']);
     }
+    
 }

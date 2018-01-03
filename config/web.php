@@ -66,6 +66,7 @@ $config = [
                 'article/create' => 'article/create',
                 'article/update/<id:\d+>' => 'article/update',  
                 'article/delete/<id:\d+>' => 'article/delete',  
+                'article/category/<id:\d+>' => 'article/category',
                 'article/<slug>' => 'article/view',
             ],
         ],

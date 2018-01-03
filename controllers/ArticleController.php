@@ -42,7 +42,10 @@ class ArticleController extends Controller
             ->limit(10)
             ->all();
 
-        $categories = ArticleCategory::find()
+        $categories = ArticleCategory::find()->joinWith('articles')
+            ->addSelect(['article_category.*', 'COUNT(article.id) as article_count'])
+            ->groupBy('article_category.id')
+            ->having('article_count > 0')
             ->orderBy('name ASC')
             ->all();
 
@@ -60,7 +63,10 @@ class ArticleController extends Controller
             ->limit(10)
             ->all();
 
-        $categories = ArticleCategory::find()
+        $categories = ArticleCategory::find()->joinWith('articles')
+            ->addSelect(['article_category.*', 'COUNT(article.id) as article_count'])
+            ->groupBy('article_category.id')
+            ->having('article_count > 0')
             ->orderBy('name ASC')
             ->all();
 
@@ -70,19 +76,22 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function actionPostCategory($id)
+    public function actionCategory($id)
     {
         $articles = Article::find()
-            ->where(['status' => 1, 'category_id' => $id])
+            ->where(['status' => 1, 'article_category_id' => $id])
             ->orderBy('id DESC')
-            ->limit(5)
+            ->limit(10)
             ->all();
 
-        $categories = ArticleCategory::find()
+        $categories = ArticleCategory::find()->joinWith('articles')
+            ->addSelect(['article_category.*', 'COUNT(article.id) as article_count'])
+            ->groupBy('article_category.id')
+            ->having('article_count > 0')
             ->orderBy('name ASC')
             ->all();
 
-        return $this->render('articleCategory', [
+        return $this->render('index', [
             'articles' => $articles,
             'categories' => $categories,
         ]);
@@ -141,8 +150,27 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldFile = isset($model) ? $model->getImageFile() : '';
+        $oldPreviewImage = isset($model) ? $model->preview_image : '';
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if(!isset($model)) {
+            $model = new Article();
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $image = $model->uploadImage();
+            
+
+            if ($image === false)
+                $model->preview_image = $oldPreviewImage;
+
+            if ($model->save()) {
+                if ($image !== false) {
+                    @unlink($oldFile);
+                    $path = $model->getImageFile();
+                    $image->saveAs($path);
+                }
+            }
             return $this->redirect(['view', 'slug' => $model->slug]);
         }
 

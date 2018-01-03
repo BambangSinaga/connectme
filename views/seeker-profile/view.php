@@ -7,8 +7,8 @@ use yii\widgets\DetailView;
 /* @var $model app\models\SeekerProfile */
 
 $this->title = "My Profile";//$model->id;
-/*$this->params['breadcrumbs'][] = ['label' => 'Seeker Profiles', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;*/
+// $this->params['breadcrumbs'][] = ['label' => 'Seeker Profiles', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="seeker-profile-view">
 
@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;*/
                     </div>
                     <div class="col-md-10">
                         <h3 class="text-capitalize">
+                            <?= !$model->is_active ? '<i class="glyphicon glyphicon-education"></i>' : '' ?>
                             <strong><?= $model->seeker_name ?></strong>
                             <?= Html::a('<span class="glyphicon glyphicon-pencil"></span> Edit Profile', ['update'], ['class' => 'btn btn-default pull-right', 'style' => ['margin-right' => '15px']]) ?>
                         </h3>

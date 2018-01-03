@@ -54,8 +54,8 @@ AppAsset::register($this);
                     'label' => Yii::$app->user->identity->username,
                     'items' => [
                         ['label' => '<i class="glyphicon glyphicon-user"></i> Profile', 'url' => '/seeker-profile/view'],
-                        ['label' => '<i class="glyphicon glyphicon-edit"></i> Edit Profile', 'url' => '/seeker-profile/update'],
                         ['label' => '<i class="glyphicon glyphicon-list-alt"></i> My Articles', 'url' => '/article/my-article'],
+                        ['label' => '<i class="glyphicon glyphicon-home"></i> My Companies', 'url' => '/company/index'],
                         ['label' => '<i class="glyphicon glyphicon-cog"></i> Reset Password', 'url' => '/site/request-password-reset'],
                         '<li>'
                         .  Html::a(
@@ -64,6 +64,9 @@ AppAsset::register($this);
                             ['data-method' => 'post','class'=>'']
                         )
                         . '</li>',
+                        '<li role="separator" class="divider"></li>',
+                        ['label' => '<i class="glyphicon glyphicon-edit"></i> Edit Profile', 'url' => '/seeker-profile/update'],
+                        ['label' => '<i class="glyphicon glyphicon-pencil"></i> Write Articles', 'url' => '/article/create']
                     ]
                 ]
             )
