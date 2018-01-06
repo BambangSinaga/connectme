@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "company".
@@ -30,13 +32,29 @@ class Company extends \yii\db\ActiveRecord
         return 'company';
     }
 
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => function() { 
+                    return date('Y-m-d H:i:s');
+                }
+            ]
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['user_id', 'company_name', 'profile_description', 'establishment_date', 'created_at', 'updated_at'], 'required'],
+            [['company_name', 'profile_description', 'establishment_date'], 'required'],
             [['user_id'], 'integer'],
             [['establishment_date', 'created_at', 'updated_at'], 'safe'],
             [['company_name'], 'string', 'max' => 255],

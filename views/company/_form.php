@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
-use kartik\date\DatePicker;
+use kartik\datecontrol\DateControl;
+use vova07\imperavi\Widget;
 /* @var $this yii\web\View */
 /* @var $model app\models\Company */
 /* @var $form yii\widgets\ActiveForm */
@@ -13,20 +14,31 @@ use kartik\date\DatePicker;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
-
     <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'profile_description')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'establishment_date')->widget(DatePicker::className(),[
-      'value' => date('d-M-Y', strtotime('+2 days')),
-      'options' => ['placeholder' => 'Select issue date ...'],
-      'pluginOptions' => [
-        'format' => 'dd-M-yyyy',
-        'todayHighlight' => true
+    <?= $form->field($model, 'profile_description')->widget(Widget::className(), [
+        'settings' => [
+            'minHeight' => 200,
+            'plugins' => [
+                'clips',
+                'fullscreen'
+            ]
         ]
-      ]) ?>
+    ]) ?>
+
+    <?= $form->field($model, 'establishment_date')->widget(DateControl::className(), [
+                                                'type'=>DateControl::FORMAT_DATE,
+                                                'ajaxConversion' => true,
+                                                'widgetOptions' => [
+                                                    'options' => ['placeholder' => 'enter held date here ...'],
+                                                    'removeButton' => false,
+                                                    'pluginOptions' => [
+                                                        'autoclose' => true,
+                                                        'todayHighlight' => true,
+                                                        'todayBtn' => true,
+                                                    ]
+                                                ]
+                                            ]) ?>
 
     <?= $form->field($model, 'company_website_url')->textInput(['maxlength' => true]) ?>
 

@@ -25,12 +25,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'user_id',
+            // 'id',
+            // 'user_id',
             'company_name',
-            'profile_description',
+            // 'profile_description',
+            [
+                'attribute' => 'profile_description',
+                'format' => 'html'
+            ],
             'establishment_date',
-            //'company_website_url:url',
+            'company_website_url:url',
             //'company_image',
             //'created_at',
             //'updated_at',

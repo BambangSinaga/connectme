@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "jobs".
@@ -34,13 +36,29 @@ class Jobs extends \yii\db\ActiveRecord
         return 'jobs';
     }
 
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => function() { 
+                    return date('Y-m-d H:i:s');
+                }
+            ]
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['company_id', 'title', 'qualification', 'requirements', 'date_created', 'start_salary', 'end_salary', 'created_at', 'updated_at'], 'required'],
+            [['company_id', 'title', 'qualification', 'requirements', 'date_created', 'start_salary', 'end_salary', 'location'], 'required'],
             [['company_id', 'show_salary'], 'integer'],
             [['qualification', 'requirements', 'oppotunity'], 'string'],
             [['date_created', 'date_closed', 'created_at', 'updated_at'], 'safe'],
@@ -48,6 +66,8 @@ class Jobs extends \yii\db\ActiveRecord
             [['title'], 'string', 'max' => 100],
             [['location'], 'string', 'max' => 255],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']],
+            [['start_salary'], 'compare', 'compareAttribute' => 'end_salary', 'operator' => '<=', 'skipOnEmpty' => true],
+            [['end_salary'], 'compare', 'compareAttribute'=>'start_salary', 'operator'=>'>='],
         ];
     }
 

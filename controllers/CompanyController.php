@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Company;
 use app\models\CompanySearch;
+use app\models\JobsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -52,8 +53,13 @@ class CompanyController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new JobsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -65,15 +71,14 @@ class CompanyController extends Controller
     public function actionCreate()
     {
         $model = new Company();
+        $model->user_id = Yii::$app->user->getId();
 
         if ($model->load(Yii::$app->request->post())) {
-          $model->save();
-          $userid = $model->user_id;
-          $image = UploadedFile::getInstance($model, 'company_image');
-          $imgName = 'company_'.$userid.'.'.$image->getExtension();
-          $image->saveAs(Yii::getAlias('@companyPath').'/'.$imgName);
-          $model->company_image = $imgName;
-          $model->save();
+            $image = UploadedFile::getInstance($model, 'company_image');
+            $imgName = 'company_'.$model->user_id.'.'.$image->getExtension();
+            $image->saveAs(Yii::getAlias('@companyPath').'/'.$imgName);
+            $model->company_image = $imgName;
+            $model->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
         }else {
