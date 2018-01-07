@@ -39,6 +39,8 @@ use app\models\SkillSet;
 
             <?= $form->field($model, 'is_active')->checkbox()->label('Still Active') ?>
 
+            <div id="department" class="form-group field-seekerprofile-department_id"></div>
+
             <?php
             $fromYear = range(date('Y'), 2000);
             $toYear = range(date('Y') + 4, 2003);
@@ -174,3 +176,49 @@ use app\models\SkillSet;
     </div>
 
 </div>
+
+<?php
+$script = <<< JS
+if ($("input[type=checkbox]").prop('checked') == false) {
+    $.ajax({
+        url: 'get-department',
+        dataType: "json",
+        success: function(data) {
+            var sel = $('<select class="form-control" name="SeekerProfile[department_id]" required>').appendTo("#department");
+
+            sel.append($("<option>").attr('value', '').text('--Choose a department--'));
+            
+            $.each(data, function(key, value){
+                sel.append($("<option>").attr('value',key).text(value));
+            });
+
+            $('<div class="help-block"></div>').appendTo('#department');
+        }
+    })
+}
+$("input[type=checkbox]").change(function() {
+    if(!this.checked) {
+      $.ajax({
+        url: 'get-department',
+        dataType: "json",
+        success: function(data) {
+            var sel = $('<select class="form-control" name="SeekerProfile[department_id]" required>').appendTo("#department");
+
+            sel.append($("<option>").attr('value', '').text('--Choose a department--'));
+            
+            $.each(data, function(key, value){
+                sel.append($("<option>").attr('value',key).text(value));
+            });
+
+            $('<div class="help-block"></div>').appendTo('#department');
+        }
+    })
+    }
+    else{
+      $("#department").empty();
+    }
+});
+ 
+JS;
+$this->registerJs($script);
+?>

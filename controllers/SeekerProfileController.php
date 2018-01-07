@@ -7,10 +7,12 @@ use app\models\SeekerProfile;
 use app\models\SeekerProfileSearch;
 use app\models\Award;
 use app\models\SeekerSkillSet;;
+use app\models\Department;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 
 /**
@@ -55,6 +57,9 @@ class SeekerProfileController extends Controller
      */
     public function actionView()
     {
+        if (is_null($this->findModel(Yii::$app->user->getId()))) {
+            return $this->redirect(['update']);
+        }
         return $this->render('view', [
             'model' => $this->findModel(Yii::$app->user->getId()),
         ]);
@@ -106,6 +111,14 @@ class SeekerProfileController extends Controller
         }
     }
 
+    public function actionGetDepartment()
+    {
+        $array = Department::find()->all();
+
+        $result = ArrayHelper::map($array, 'id', 'name');
+        echo JSON::encode($result);
+    }
+
     /**
      * Updates an existing SeekerProfile model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -147,12 +160,11 @@ class SeekerProfileController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = SeekerProfile::find()->joinWith(['awards'])->where(['seeker_profile.id' => $id])->one()) !== null) {
+        if (($model = SeekerProfile::find()->joinWith(['awards'])->where(['seeker_profile.user_id' => $id])->one()) !== null) {
             // var_dump($model->awards);die;
             $model->skill_ids = ArrayHelper::map($model->skills, 'skill_set_name', 'skill_set_name');
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+        return null;
     }
 }

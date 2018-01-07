@@ -24,6 +24,7 @@ use app\models\SkillSet;
  * @property string $profile_image
  * @property string $gender
  * @property integer $is_active
+ * @property integer $department_id
  * @property string $contact_number
  * @property string $degree
  * @property string $created_at
@@ -91,7 +92,7 @@ class SeekerProfile extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'seeker_name', 'field_of_study', 'from_year', 'to_year', 'gender'], 'required'],
-            [['user_id', 'is_active'], 'integer'],
+            [['user_id', 'is_active', 'department_id'], 'integer'],
             [['grade'], 'number'],
             [['profile_image', 'degree', 'created_at', 'updated_at', 'skill_ids'], 'safe'],
             [['seeker_name', 'profile_image'], 'string', 'max' => 255],
@@ -122,6 +123,7 @@ class SeekerProfile extends \yii\db\ActiveRecord
             'profile_image' => 'Profile Image',
             'gender' => 'Gender',
             'is_active' => 'Is Active',
+            'department_id' => 'Department Id',
             'contact_number' => 'Contact Number',
             'degree' => 'Degree',
             'created_at' => 'Created At',

@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo '<h2>'.$article->title.'</h2>';
                     echo '<p>'.substr($article->content,0,300).'...</p>';
                     echo '<p><small>articleed by '.$article->user->username.' at '.date('F j, Y, g:i a',strtotime($article->created_at)).'</small></p>';
-                    echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>', 'article/'. $article->slug, ['title' => 'View']);
+                    echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>', [''. $article->slug], ['title' => 'View']);
                     echo '</div>';
                 }
                 ?>
