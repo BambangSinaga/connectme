@@ -115,7 +115,7 @@ class SeekerProfileController extends Controller
     {
         $array = Department::find()->all();
 
-        $result = ArrayHelper::map($array, 'id', 'name');
+        $result = ArrayHelper::map($array, 'id', 'department_name');
         echo JSON::encode($result);
     }
 
