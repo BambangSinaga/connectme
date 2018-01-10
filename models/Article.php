@@ -8,6 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\web\UploadedFile;
+use yii2mod\user\models\UserModel;
 
 /**
  * This is the model class for table "article".
@@ -70,14 +71,14 @@ class Article extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'preview_image', 'article_category_id', 'status'], 'required'],
+            [['title', 'content', 'article_category_id', 'status'], 'required'],
             [['user_id', 'article_category_id', 'status'], 'integer'],
             [['content'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['preview_image'], 'file', 'extensions' => ['png', 'jpg', 'gif'], 'maxSize' => '100000'], //
             [['title', 'slug'], 'string', 'max' => 255],
             [['article_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ArticleCategory::className(), 'targetAttribute' => ['article_category_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserModel::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -113,19 +114,19 @@ class Article extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(UserModel::className(), ['id' => 'user_id']);
     }
 
     public function getImageFile() 
     {
-        return isset($this->preview_image) ? Yii::$app->params['upload']['myphoto']['path'] . Yii::$app->user->id . '/' . $this->preview_image : null;
+        return isset($this->preview_image) ? Yii::$app->params['upload']['myphoto']['path'] . $this->user_id . '/' . $this->preview_image : null;
     }
 
     public function getImageUrl() 
     {
         // return a default image placeholder if your source avatar is not found
-        $avatar = isset($this->preview_image) ? $this->preview_image : 'default_user.png';
-        return Yii::$app->urlManager->createUrl(Yii::$app->params['upload']['myphoto']['url']). Yii::$app->user->id . '/' . $avatar;
+        $avatar = isset($this->preview_image) ? $this->preview_image : '../../default-thumb.jpg';
+        return Yii::$app->urlManager->createUrl(Yii::$app->params['upload']['myphoto']['url']). $this->user_id . '/' . $avatar;
     }
 
     public function uploadImage() {
