@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-
+use yii\web\UploadedFile;
 /**
  * This is the model class for table "company".
  *
@@ -96,5 +96,54 @@ class Company extends \yii\db\ActiveRecord
     public function getJobs()
     {
         return $this->hasMany(Jobs::className(), ['company_id' => 'id']);
+    }
+
+    public function getImageFile() 
+    {
+        return isset($this->company_image) ? Yii::$app->params['upload']['cmpimage']['path'] . $this->company_image : null;
+    }
+
+    public function getImageUrl() 
+    {
+        // return a default image placeholder if your source avatar is not found
+        $companyimg = isset($this->company_image) ? $this->company_image : 'default_user.png';
+        return Yii::$app->urlManager->createUrl(Yii::$app->params['upload']['cmpimage']['url']) . $avatar;
+    }
+
+    public function uploadImage() {
+        $image = UploadedFile::getInstance($this, 'company_image');
+
+        // if no image was uploaded abort the upload
+        if (empty($image)) {
+            return false;
+        }
+
+        $ext = explode(".", $image->name);
+        $ext = end($ext);
+
+        // generate a unique file name
+        $this->company_image = Yii::$app->security->generateRandomString().".{$ext}";
+
+        // the uploaded image instance
+        return $image;
+    }
+
+    public function deleteImage() {
+        $file = $this->getImageFile();
+
+        // check if file exists on server
+        if (empty($file) || !file_exists($file)) {
+            return false;
+        }
+
+        // check if uploaded file can be deleted on server
+        if (!unlink($file)) {
+            return false;
+        }
+
+        // if deletion successful, reset your file attributes
+        $this->company_image = null;
+
+        return true;
     }
 }

@@ -74,9 +74,9 @@ class CompanyController extends Controller
         $model->user_id = Yii::$app->user->getId();
 
         if ($model->load(Yii::$app->request->post())) {
-            $image = UploadedFile::getInstance($model, 'company_image');
-            $imgName = 'company_'.$model->user_id.'.'.$image->getExtension();
-            $image->saveAs(Yii::getAlias('@companyPath').'/'.$imgName);
+            $image = $model->uploadImage();
+            $imgName = $model->company_image;
+            $image->saveAs(Yii::$app->params['upload']['cmpimage']['path'].$imgName);
             $model->company_image = $imgName;
             $model->save();
 

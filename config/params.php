@@ -1,7 +1,7 @@
 <?php
 
-Yii::setAlias('@companyPath','/opt/lampp/htdocs/connectme/uploads/company/');
-Yii::setAlias('@companyUrl','http://connectme/uploads/company');
+//Yii::setAlias('@companyPath','/opt/lampp/htdocs/connectme/uploads/company/');
+//Yii::setAlias('@companyUrl','http://connectme/uploads/company');
 
 return [
     'adminEmail' => 'admin@example.com',
@@ -14,6 +14,10 @@ return [
         ],
         'myphoto' => [
         	'path' => dirname(__DIR__) .'/uploads/photo/',
+            'url' => ['file/image','filename'=>'/photo/'],
+        ],
+        'cmpimage' => [
+            'path' => dirname(__DIR__) .'/uploads/company/',
             'url' => ['file/image','filename'=>'/photo/'],
         ]
     ]

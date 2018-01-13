@@ -36,13 +36,13 @@ class JobsController extends Controller
      */
     public function actionIndex()
     {
-      $provider = new \yii\data\ActiveDataProvider([
+      $dataProvider = new \yii\data\ActiveDataProvider([
         'query' => Jobs::find(),
         'pagination' => [
           'pageSize' => 10,
         ],
       ]);
-      return $this->render('index',['provider' => $provider]);
+      return $this->render('index',['dataProvider' => $dataProvider]);
       /*
         $searchModel = new JobsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

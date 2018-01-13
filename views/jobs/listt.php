@@ -5,10 +5,9 @@ echo \yii\widgets\ListView::widget([
   {
     return '
     <div class="list-group">
-    <a href="#" class="list-group-item active">
+    <a href="http://localhost/connectme/web/company" class="list-group-item active">
     <h4 class="list-group-item-heading">'.$model->title.'</h4>
-    <p class="list-group-item-text">'.$model->qualification."<br>"
-      .$model->requirements.'</p>
+    <p class="list-group-item-text">'.$model->qualification.'</p>
     </a>
     </div>';
   }
