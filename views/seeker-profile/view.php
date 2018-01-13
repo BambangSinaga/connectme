@@ -24,13 +24,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="col-md-10">
                         <h3 class="text-capitalize">
-                            <?= !$model->is_active ? '<i class="glyphicon glyphicon-education"></i>' : '' ?>
                             <strong><?= $model->seeker_name ?></strong>
                             <?php if (Yii::$app->user->can('updateProfile', ['profile' => $model])) {
                                 echo Html::a('<span class="glyphicon glyphicon-pencil"></span> Edit Profile', ['update', 'id' => $model->id], ['class' => 'btn btn-default pull-right', 'style' => ['margin-right' => '15px']]);
                             }?>
                         </h3>
-                        <p><span class="glyphicon glyphicon-earphone text-danger" style="font-size: 1.2em;"></span> <?= !empty($model->contact_number) ? $model->contact_number : '<em style="color:#777;">empty</em>'; ?></p>
+                        <p><span class="glyphicon glyphicon-earphone text-danger" style="font-size: 1.2em;"></span> <?= !empty($model->contact_number) ? $model->contact_number : '<em style="color:#777;">empty</em>'; ?>
+                        </p>
+                        <p class="profile-footer">
+                            <?= !$model->is_active ? '<i class="glyphicon glyphicon-education"></i>' : '' ?>
+                            <?= Html::encode($model->department->department_name); ?>
+                                
+                        </p>
                         <blockquote>
                             <!-- <p class="text-justify">Short Bio</p> -->
                             <footer><?= $model->short_bio ?></footer>

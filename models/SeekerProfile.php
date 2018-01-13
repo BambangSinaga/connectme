@@ -32,6 +32,7 @@ use app\models\SkillSet;
  *
  * @property Award[] $awards
  * @property User $user
+ * @property Department $department
  * @property SeekerSkillSet[] $seekerSkillSets
  */
 class SeekerProfile extends \yii\db\ActiveRecord
@@ -145,6 +146,14 @@ class SeekerProfile extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDepartment()
+    {
+        return $this->hasOne(Department::className(), ['id' => 'department_id']);
     }
 
     /**

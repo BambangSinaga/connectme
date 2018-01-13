@@ -171,7 +171,7 @@ class SeekerProfileController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = SeekerProfile::find()->joinWith(['awards'])->where(['seeker_profile.user_id' => $id])->one()) !== null) {
+        if (($model = SeekerProfile::find()->joinWith(['awards', 'department'])->where(['seeker_profile.user_id' => $id])->one()) !== null) {
             // var_dump($model->awards);die;
             $model->skill_ids = ArrayHelper::map($model->skills, 'skill_set_name', 'skill_set_name');
             return $model;

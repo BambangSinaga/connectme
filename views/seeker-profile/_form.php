@@ -39,7 +39,9 @@ use app\models\SkillSet;
 
             <?= $form->field($model, 'is_active')->checkbox()->label('Still Active') ?>
 
-            <div id="department" class="form-group field-seekerprofile-department_id"></div>
+            <div id="department" class="form-group field-seekerprofile-department_id">
+                <label class="control-label" for="seekerprofile-department_id">Department</label>
+            </div>
 
             <?php
             $fromYear = range(date('Y'), 2000);
@@ -202,6 +204,7 @@ $("input[type=checkbox]").change(function() {
         url: 'get-department',
         dataType: "json",
         success: function(data) {
+            $('<label class="control-label" for="seekerprofile-department_id">Department</label>').appendTo("#department");
             var sel = $('<select class="form-control" name="SeekerProfile[department_id]" required>').appendTo("#department");
 
             sel.append($("<option>").attr('value', '').text('--Choose a department--'));
