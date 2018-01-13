@@ -88,6 +88,9 @@ $config = [
             // add wildcard allowed action here!
             'site/*',
             'jobs/index',
+            'jobs/view*',
+            'company/visit*',
+            'file/*',
             'gii/*',
             'debug/*',
             'admin/*',
