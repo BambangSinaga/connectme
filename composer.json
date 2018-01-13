@@ -28,8 +28,9 @@
         "wbraganca/yii2-dynamicform": "dev-master",
         "mootensai/yii2-relation-trait": "*",
         "cornernote/yii2-linkall": "*",
-        "hscstudio/yii2-mimin": "~1.1.4",
-        "vova07/yii2-imperavi-widget": "*"
+        "mdmsoft/yii2-admin": "~1.0",
+        "vova07/yii2-imperavi-widget": "*",
+        "kartik-v/yii2-widget-touchspin": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

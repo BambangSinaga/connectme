@@ -6,6 +6,7 @@ use Yii;
 use app\models\Company;
 use app\models\CompanySearch;
 use app\models\JobsSearch;
+use app\models\Jobs;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -45,6 +46,18 @@ class CompanyController extends Controller
         ]);
     }
 
+    public function actionMyCompany()
+    {
+        $searchModel = new CompanySearch();
+        $query = Company::find()->where(['user_id' => Yii::$app->user->getId()]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single Company model.
      * @param integer $id
@@ -54,12 +67,20 @@ class CompanyController extends Controller
     public function actionView($id)
     {
         $searchModel = new JobsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = Jobs::find()->where(['company_id' => $id]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $query);
 
         return $this->render('view', [
             'model' => $this->findModel($id),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionVisit($id)
+    {
+        return $this->render('view_public', [
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -75,18 +96,22 @@ class CompanyController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $image = $model->uploadImage();
-            $imgName = $model->company_image;
-            $image->saveAs(Yii::$app->params['upload']['cmpimage']['path'].$imgName);
-            $model->company_image = $imgName;
-            $model->save();
 
-            return $this->redirect(['view', 'id' => $model->id]);
-        }else {
+            if ($image === false)
+                $model->company_image = null;
 
+            if ($model->save()) {
+                if ($image !== false) {
+                    $path = $model->getImageFile();
+                    $image->saveAs($path);
+                }
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            \Yii::$app->getSession()->setFlash('warning', 'failed to saved!');
+        }
         return $this->render('create', [
             'model' => $model,
         ]);
-      }
     }
 
     /**
@@ -99,8 +124,28 @@ class CompanyController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        if (!Yii::$app->user->can('updateCompany', ['company' => $model])) {
+            \Yii::$app->getSession()->setFlash('warning', 'only update your own company');
+            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $oldProfileImage = $model->company_image;
+
+        if ($model->load(Yii::$app->request->post())) {
+            $image = $model->uploadImage();
+
+            if ($image === false)
+                $model->company_image = $oldProfileImage;
+
+            if ($model->save()) {
+                if ($image !== false) {
+                    @unlink($oldProfileImage);
+                    $path = $model->getImageFile();
+                    $image->saveAs($path);
+                }
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

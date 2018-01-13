@@ -26,19 +26,17 @@ use vova07\imperavi\Widget;
         ]
     ]) ?>
 
-    <?= $form->field($model, 'establishment_date')->widget(DateControl::className(), [
-                                                'type'=>DateControl::FORMAT_DATE,
-                                                'ajaxConversion' => true,
-                                                'widgetOptions' => [
-                                                    'options' => ['placeholder' => 'enter held date here ...'],
-                                                    'removeButton' => false,
-                                                    'pluginOptions' => [
-                                                        'autoclose' => true,
-                                                        'todayHighlight' => true,
-                                                        'todayBtn' => true,
-                                                    ]
-                                                ]
-                                            ]) ?>
+    <?= $form->field($model, 'establishment_date')->widget(DateControl::classname(), [
+        'type'=>DateControl::FORMAT_DATE,
+        'ajaxConversion'=>false,
+        'widgetOptions' => [
+            'pluginOptions' => [
+                'autoclose' => true,
+                'todayHighlight' => true,
+                'todayBtn' => true,
+            ]
+        ]
+    ]) ?>
 
     <?= $form->field($model, 'company_website_url')->textInput(['maxlength' => true]) ?>
 
@@ -47,7 +45,7 @@ use vova07\imperavi\Widget;
             'accept'=>'image/*'
         ],
         'pluginOptions'=>[
-            'allowedFileExtensions'=>['jpg','gif','png'],
+            'allowedFileExtensions'=>['jpg', 'jpeg', 'gif', 'png'],
             'showUpload' => false,
     ]]); ?>
 

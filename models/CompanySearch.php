@@ -39,9 +39,11 @@ class CompanySearch extends Company
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query = '')
     {
-        $query = Company::find();
+        if ($query == '') {
+            $query = Company::find();
+        }
 
         // add conditions that should always apply here
 

@@ -65,14 +65,21 @@ class SeekerProfileController extends Controller
         ]);
     }
 
+    public function actionVisit($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
     /**
      * Creates a new SeekerProfile model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionUpdate()
+    public function actionUpdate($id='')
     {
-        $model = SeekerProfile::find()->where(['user_id' => Yii::$app->user->getId()])->one();
+        $model = SeekerProfile::find()->where(['user_id' => $id != '' ? $id : Yii::$app->user->id])->one();
         $oldFile = isset($model) ? $model->getImageFile() : '';
         $oldProfileImage = isset($model) ? $model->profile_image : '';
 
@@ -82,6 +89,10 @@ class SeekerProfileController extends Controller
             $model->user_id = Yii::$app->user->getId();
             $model->seeker_name = Yii::$app->user->identity->username;
         } else {
+            if (!Yii::$app->user->can('updateProfile', ['profile' => $model])) {
+                \Yii::$app->getSession()->setFlash('warning', 'only update your own profile');
+                return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+            }
             $modelsAwards = $model->awards;
         }
 

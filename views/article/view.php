@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap\Nav;
 use yii\helpers\Url;
+use mdm\admin\components\Helper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Article */
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="article-view">
 
     <p>
+        <?php if (Yii::$app->user->can('updateArticle', ['article' => $article])) { ?>
         <?= Html::a('Update', ['update', 'id' => $article->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $article->id], [
             'class' => 'btn btn-danger',
@@ -23,27 +25,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php } ?>
     </p>
 
     <div class="row">
         <div class="col-lg-9">
-            <div>
                 <?php
                     echo '<div>';
                     echo '<h2>'.$article->title.'</h2>';
-                    echo '<p>'.substr($article->content,0,300).'...</p>';
-                    echo '<p><small>articleed by '.$article->user->username.' at '.date('F j, Y, g:i a',strtotime($article->created_at)).'</small></p>';
+                    echo '<p><small class="profile-footer">written by </small>'.$article->user->username.'<small class="profile-footer"> at '.date('F j, Y, g:i a',strtotime($article->created_at)).'</small></p>';
+                    echo '<p>'.$article->content.'</p>';
                     echo '</div>';
                 ?>
-             </div>
         </div>
         <div class="col-lg-3">
             <?php
                 $items=[];
                 foreach($categories as $category){
-                    $items[]=['label' => $category->name , 'url' => '#'];
+                    $items[]=['label' => $category->name . ' <span class="badge">'.$category->article_count.'</span>' , 'url' => ['article/category', 'id' => $category->id]];
                 }
                 echo Nav::widget([
+                    'encodeLabels' => false,
+                    'options' => ['class' => 'nav nav-pills'],
                     'items' => $items,
                 ]);
             ?>

@@ -36,11 +36,12 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        $articles = Article::find()
-            ->where(['status' => 1])
-            ->orderBy('id DESC')
-            ->limit(10)
-            ->all();
+        $dataProvider = new \yii\data\ActiveDataProvider([
+          'query' => Article::find()->with('user')->where(['status' => 1])->orderBy('id DESC'),
+          'pagination' => [
+            'pageSize' => 10,
+          ],
+        ]);
 
         $categories = ArticleCategory::find()->joinWith('articles')
             ->addSelect(['article_category.*', 'COUNT(article.id) as article_count'])
@@ -50,18 +51,19 @@ class ArticleController extends Controller
             ->all();
 
         return $this->render('index', [
-            'articles' => $articles,
+            'dataProvider' => $dataProvider,
             'categories' => $categories,
         ]);
     }
 
     public function actionMyArticle()
     {
-        $articles = Article::find()
-            ->where(['status' => 1, 'user_id' => Yii::$app->user->id])
-            ->orderBy('id DESC')
-            ->limit(10)
-            ->all();
+        $dataProvider = new \yii\data\ActiveDataProvider([
+          'query' => Article::find()->with('user')->where(['status' => 1, 'user_id' => Yii::$app->user->id])->orderBy('id DESC'),
+          'pagination' => [
+            'pageSize' => 10,
+          ],
+        ]);
 
         $categories = ArticleCategory::find()->joinWith('articles')
             ->addSelect(['article_category.*', 'COUNT(article.id) as article_count'])
@@ -71,18 +73,19 @@ class ArticleController extends Controller
             ->all();
 
         return $this->render('index', [
-            'articles' => $articles,
+            'dataProvider' => $dataProvider,
             'categories' => $categories,
         ]);
     }
 
     public function actionCategory($id)
     {
-        $articles = Article::find()
-            ->where(['status' => 1, 'article_category_id' => $id])
-            ->orderBy('id DESC')
-            ->limit(10)
-            ->all();
+        $dataProvider = new \yii\data\ActiveDataProvider([
+          'query' => Article::find()->with('user')->where(['status' => 1, 'article_category_id' => $id])->orderBy('id DESC'),
+          'pagination' => [
+            'pageSize' => 10,
+          ],
+        ]);
 
         $categories = ArticleCategory::find()->joinWith('articles')
             ->addSelect(['article_category.*', 'COUNT(article.id) as article_count'])
@@ -92,14 +95,17 @@ class ArticleController extends Controller
             ->all();
 
         return $this->render('index', [
-            'articles' => $articles,
+            'dataProvider' => $dataProvider,
             'categories' => $categories,
         ]);
     }
 
     public function actionView($slug)
     {
-        $categories = ArticleCategory::find()
+        $categories = ArticleCategory::find()->joinWith('articles')
+            ->addSelect(['article_category.*', 'COUNT(article.id) as article_count'])
+            ->groupBy('article_category.id')
+            ->having('article_count > 0')
             ->orderBy('name ASC')
             ->all();
 
@@ -131,7 +137,24 @@ class ArticleController extends Controller
     {
         $model = new Article();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $oldFile = isset($model) ? $model->getImageFile() : '';
+        $oldPreviewImage = isset($model) ? $model->preview_image : '';
+
+        if ($model->load(Yii::$app->request->post())) {
+            $image = $model->uploadImage();
+            
+
+            if ($image === false)
+                $model->preview_image = $oldPreviewImage;
+
+            if ($model->save()) {
+                if ($image !== false) {
+                    @unlink($oldFile);
+                    $path = $model->getImageFile();
+                    $image->saveAs($path);
+                }
+            }
+
             return $this->redirect(['view', 'slug' => $model->slug]);
         }
 
@@ -150,12 +173,14 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        if (!Yii::$app->user->can('updateArticle', ['article' => $model])) {
+            \Yii::$app->getSession()->setFlash('warning', 'only update your own article');
+            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+        }
+        
         $oldFile = isset($model) ? $model->getImageFile() : '';
         $oldPreviewImage = isset($model) ? $model->preview_image : '';
-
-        if(!isset($model)) {
-            $model = new Article();
-        }
 
         if ($model->load(Yii::$app->request->post())) {
             $image = $model->uploadImage();
@@ -188,7 +213,13 @@ class ArticleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if (!Yii::$app->user->can('updateArticle', ['article' => $model])) {
+            \Yii::$app->getSession()->setFlash('warning', 'only delete your own article');
+            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }

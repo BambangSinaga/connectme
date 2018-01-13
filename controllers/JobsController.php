@@ -8,6 +8,7 @@ use app\models\JobsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Expression;
 
 /**
  * JobsController implements the CRUD actions for Jobs model.
@@ -37,20 +38,12 @@ class JobsController extends Controller
     public function actionIndex()
     {
       $dataProvider = new \yii\data\ActiveDataProvider([
-        'query' => Jobs::find(),
+        'query' => Jobs::find()->with('company')->where(['>=', 'date_closed', new Expression('CURDATE()')]),
         'pagination' => [
           'pageSize' => 10,
         ],
       ]);
       return $this->render('index',['dataProvider' => $dataProvider]);
-      /*
-        $searchModel = new JobsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);*/
     }
 
     /**
@@ -96,6 +89,11 @@ class JobsController extends Controller
     {
         $model = $this->findModel($id);
 
+        if (!Yii::$app->user->can('updateJob', ['job' => $model])) {
+            \Yii::$app->getSession()->setFlash('warning', 'only update your own job');
+            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+        }
+    
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -128,7 +126,7 @@ class JobsController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Jobs::findOne($id)) !== null) {
+        if (($model = Jobs::find()->where(['id' => $id])->with('company')->one()) !== null) {
             return $model;
         }
 

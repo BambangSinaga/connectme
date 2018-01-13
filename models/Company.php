@@ -54,12 +54,14 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['company_name', 'profile_description', 'establishment_date'], 'required'],
+            [['company_name', 'profile_description', 'company_image'], 'required'],
             [['user_id'], 'integer'],
-            [['establishment_date', 'created_at', 'updated_at'], 'safe'],
+            [['establishment_date', 'company_image', 'created_at', 'updated_at'], 'safe'],
             [['company_name'], 'string', 'max' => 255],
             [['profile_description'], 'string', 'max' => 1000],
             [['company_website_url', 'company_image'], 'string', 'max' => 500],
+            [['company_website_url'], 'url', 'message' => 'no `http` or `https` found in {attribute}'],
+            [['company_image'], 'file', 'extensions' => ['png', 'jpg', 'jpeg', 'gif'], 'maxSize' => '100000'], // 100kb
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -105,9 +107,8 @@ class Company extends \yii\db\ActiveRecord
 
     public function getImageUrl() 
     {
-        // return a default image placeholder if your source avatar is not found
         $companyimg = isset($this->company_image) ? $this->company_image : 'default_user.png';
-        return Yii::$app->urlManager->createUrl(Yii::$app->params['upload']['cmpimage']['url']) . $avatar;
+        return Yii::$app->urlManager->createUrl(Yii::$app->params['upload']['cmpimage']['url']) . $companyimg;
     }
 
     public function uploadImage() {
@@ -118,11 +119,8 @@ class Company extends \yii\db\ActiveRecord
             return false;
         }
 
-        $ext = explode(".", $image->name);
-        $ext = end($ext);
-
         // generate a unique file name
-        $this->company_image = Yii::$app->security->generateRandomString().".{$ext}";
+        $this->company_image = $image->name;
 
         // the uploaded image instance
         return $image;

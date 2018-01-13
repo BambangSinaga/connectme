@@ -40,8 +40,8 @@ $config = [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com',
-                'username' => 'your-email-or-username',
-                'password' => 'your-password',
+                'username' => 'mejbambang@gmail.com',
+                'password' => 'golomrajbdxmceff',
                 'port' => '587',
                 'encryption' => 'tls',
             ],
@@ -76,25 +76,22 @@ $config = [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@yii2mod/user/messages',
                 ],
-                // ...
             ],
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // only support DbManager
         ],
     ],
-    'as beforeRequest' => [
-        'class' => 'yii\filters\AccessControl',
-        'rules' => [
-            [
-                'allow' => true,
-                'actions' => ['login', 'signup'],
-            ],
-            [
-                'allow' => true,
-                'roles' => ['@'],
-            ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            // add wildcard allowed action here!
+            'site/*',
+            'jobs/index',
+            'gii/*',
+            'debug/*',
+            'admin/*',
         ],
-        'denyCallback' => function () {
-            return Yii::$app->response->redirect(['site/login']);
-        },
     ],
     'modules' => [
         'redactor' => [
@@ -148,7 +145,22 @@ $config = [
                 ]
             ]
             // other settings
-        ]
+        ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu', // avaliable value 'left-menu', 'right-menu' and 'top-menu'
+            'controllerMap' => [
+                 'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    'userClassName' => 'yii2mod\user\models\UserModel',
+                ]
+            ],
+            'menus' => [
+                'assignment' => [
+                    'label' => 'Grand Access' // change label
+                ]
+            ],
+        ],
     ],
     'params' => $params,
 ];

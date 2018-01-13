@@ -18,7 +18,7 @@ return [
         ],
         'cmpimage' => [
             'path' => dirname(__DIR__) .'/uploads/company/',
-            'url' => ['file/image','filename'=>'/photo/'],
+            'url' => ['file/image','filename'=>'/company/'],
         ]
     ]
 ];

@@ -55,7 +55,7 @@ AppAsset::register($this);
                     'items' => [
                         ['label' => '<i class="glyphicon glyphicon-user"></i> Profile', 'url' => '/seeker-profile/view'],
                         ['label' => '<i class="glyphicon glyphicon-list-alt"></i> My Articles', 'url' => '/article/my-article'],
-                        ['label' => '<i class="glyphicon glyphicon-home"></i> My Companies', 'url' => '/company/index'],
+                        ['label' => '<i class="glyphicon glyphicon-home"></i> My Companies', 'url' => '/company/my-company'],
                         ['label' => '<i class="glyphicon glyphicon-cog"></i> Reset Password', 'url' => '/site/request-password-reset'],
                         '<li>'
                         .  Html::a(

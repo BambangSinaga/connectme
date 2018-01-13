@@ -40,9 +40,11 @@ class JobsSearch extends Jobs
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query = '')
     {
-        $query = Jobs::find();
+        if ($query == '') {
+            $query = Jobs::find();
+        }
 
         // add conditions that should always apply here
 

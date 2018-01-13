@@ -97,7 +97,7 @@ class SeekerProfile extends \yii\db\ActiveRecord
             [['profile_image', 'degree', 'created_at', 'updated_at', 'skill_ids'], 'safe'],
             [['seeker_name', 'profile_image'], 'string', 'max' => 255],
             [['short_bio'], 'string', 'max' => 250],
-            [['profile_image'], 'file', 'extensions' => ['png', 'jpg', 'gif'], 'maxSize' => '100000'], // 100kb
+            [['profile_image'], 'file', 'extensions' => ['png', 'jpg', 'jpeg', 'gif'], 'maxSize' => '100000'], // 100kb
             [['field_of_study', 'gender'], 'string', 'max' => 100],
             [['from_year', 'to_year'], 'string', 'max' => 4],
             [['contact_number'], 'string', 'max' => 20],

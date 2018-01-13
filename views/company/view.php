@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Company */
@@ -56,12 +57,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'location',
             'date_created',
             'date_closed',
-            //'company_website_url:url',
-            //'company_image',
-            //'created_at',
-            //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-eye-open"></span>', 
+                            ['jobs/view', 'id' => $model->id]);
+                    },
+                    'update' => function ($url,$model) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-pencil"></span>', 
+                            ['jobs/update', 'id' => $model->id]);
+                    },
+                    'delete' => function ($url, $model) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-trash"></span>', 
+                            ['jobs/delete()', 'id' => $model->id]);
+                    }
+                ],
+            ],
         ],
     ]); ?>
 

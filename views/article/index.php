@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\ListView;
 use yii\bootstrap\Nav;
 
 /* @var $this yii\web\View */
@@ -13,24 +13,40 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <div class="row">
         <div class="col-lg-9">
-            <div>
-                <?php
-                foreach($articles as $article){
-                    echo '<div>';
-                    echo '<h2>'.$article->title.'</h2>';
-                    echo '<p>'.substr($article->content,0,300).'...</p>';
-                    echo '<p><small>articleed by '.$article->user->username.' at '.date('F j, Y, g:i a',strtotime($article->created_at)).'</small></p>';
-                    echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>', [''. $article->slug], ['title' => 'View']);
-                    echo '</div>';
-                }
-                ?>
-             </div>
+            <?php
+              echo ListView::widget([
+              'dataProvider' => $dataProvider,
+              'options' => [
+                'tag' => 'div',
+                'class' => 'list-wrapper',
+                'id' => 'list-wrapper',
+              ],
+              'summary' => '',
+              'layout' => "{items}\n{pager}",
+              'itemView' => function($model, $key, $index, $widget) {
+                return $this->render('_list_item',['model' => $model]);
+              },
+              'itemOptions' => [
+                'tag' => false,
+              ],
+              'pager' => [
+                'firstPageLabel' => 'first',
+                'lastPageLabel' => 'last',
+                'nextPageLabel' => 'next',
+                'prevPageLabel' => 'previous',
+                'maxButtonCount' => 3,
+                'options' => [
+                  'class' => 'pagination col-xs-12'
+                ]
+              ]
+            ]);
+            ?>
         </div>
+
+    
+        
         <div class="col-lg-3">
             <?php
                 $items=[];
