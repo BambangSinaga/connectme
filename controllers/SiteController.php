@@ -9,6 +9,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\SearchForm;
+use app\models\Jobs;
 
 class SiteController extends Controller
 {
@@ -76,7 +78,19 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new SearchForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => Jobs::find()->with('company')->where(['like', 'title', $model->jobsname]),
+            'pagination' => [
+            'pageSize' => 10,
+        ],
+      ]);
+      return $this->render('/jobs/index',['dataProvider' => $dataProvider]);
+            
+        }
+        return $this->render('home', ['model' => $model]);
     }
 
     /**
