@@ -94,6 +94,7 @@ $config = [
             'gii/*',
             'debug/*',
             'admin/*',
+            'datecontrol/*'
         ],
     ],
     'modules' => [

@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
 use app\models\ArticleCategory;
 use vova07\imperavi\Widget;
 use yii\helpers\Url;
@@ -12,7 +11,7 @@ use kartik\file\FileInput;
 /* @var $model app\models\Article */
 /* @var $form yii\widgets\ActiveForm */
 
-$dataCategory = ArrayHelper::map(ArticleCategory::find()->asArray()->all(), 'id', 'name');
+
 
 ?>
 

@@ -9,6 +9,7 @@ use app\models\ArticleCategory;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
@@ -136,6 +137,7 @@ class ArticleController extends Controller
     public function actionCreate()
     {
         $model = new Article();
+        $dataCategory = ArrayHelper::map(ArticleCategory::find()->asArray()->all(), 'id', 'name');
 
         $oldFile = isset($model) ? $model->getImageFile() : '';
         $oldPreviewImage = isset($model) ? $model->preview_image : '';
@@ -160,6 +162,7 @@ class ArticleController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'dataCategory' => $dataCategory
         ]);
     }
 
