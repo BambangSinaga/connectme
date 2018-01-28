@@ -31,7 +31,7 @@ use app\models\SkillSet;
 
             <?= $form->field($model, 'short_bio')->textArea(['maxlength' => true, 'rows' => 6, 'placeholder' => 'enter your short bio here ...']) ?>
 
-            <?= $form->field($model, 'degree')->textInput(['maxlength' => true, 'placeholder' => 'enter your grade here ...']) ?>
+            <?= $form->field($model, 'degree')->textInput(['maxlength' => true, 'placeholder' => 'enter your degree here ...']) ?>
 
             <?= $form->field($model, 'field_of_study')->textInput(['maxlength' => true, 'placeholder' => 'enter your field of study ...']) ?>
 

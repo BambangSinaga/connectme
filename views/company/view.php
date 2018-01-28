@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <p>
-        <?= Html::a('Create Jobs', ['jobs/create', 'id' => 1], ['data-method' => 'post','class'=>'btn btn-primary']) ?>
+        <?= Html::a('Create Jobs', ['jobs/create', 'id' => $model->id], ['data-method' => 'post','class'=>'btn btn-primary']) ?>
     </p>
 
     <?= GridView::widget([

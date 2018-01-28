@@ -177,6 +177,8 @@ class ArticleController extends Controller
     {
         $model = $this->findModel($id);
 
+        $dataCategory = ArrayHelper::map(ArticleCategory::find()->asArray()->all(), 'id', 'name');
+
         if (!Yii::$app->user->can('updateArticle', ['article' => $model])) {
             \Yii::$app->getSession()->setFlash('warning', 'only update your own article');
             return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
@@ -204,6 +206,7 @@ class ArticleController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'dataCategory' => $dataCategory,
         ]);
     }
 
